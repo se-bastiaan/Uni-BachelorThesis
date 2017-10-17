@@ -1,8 +1,10 @@
 \chapter{Introduction}\label{introduction}
+
+\iffalse
 The introduction of your bachelor thesis introduces the research area, the
 research hypothesis, and the scientific contributions of your work.
 A good narrative structure is the one suggested by Simon Peyton Jones
-\cite{peys04:HowToWriteAGoodResearchPaper}:
+\cite{ieee80211}:
 %
 \begin{itemize}
 \item describe the problem / research question
@@ -12,3 +14,9 @@ A good narrative structure is the one suggested by Simon Peyton Jones
 \item motivate why / how your solution solves the problem (this is technical)
 \item explain how it compares with related work
 \end{itemize}
+\fi
+
+
+A lot has changed since the introduction of personal computers. Networks have been set-up everywhere and smartphones have been invented. With the introduction of new technologies also came the interest into the protection of data sent using the internet. The most used wireless internet protocol is defined in the 802.11 specification \cite{ieee80211} and is more commonly known as ‘Wi-Fi’. Part of this specification is a way to let clients (stations, STAs) communicate without severing the connection to the shared access point (AP), this is called a Tunneled Direct Link Set-up (TDLS).  This specific part of the specification introduces a protocol handshake which is used to secure the link. We want to look into this part of the specification, analyse the implementation to find out if this handshake is properly executed. Since the protocol is intended for public use, people should be able to rely on the handshake to be completely secure. Analysing the implementation will make sure the public can use the TDLS functionality without worrying about how secure their connection is.
+
+Analysing protocols by inferring the state machine is not a new concept. It has been used before to learn state machines of EMV cards \cite(bankcards), and hand-held readers used for internet banking \cite(identifier). Additionally, the TCP \cite(tcpchecking), TLS \cite(tlsfuzzing) and SSH \cite(sshchecking) protocols have been subject to this type of testing. In the case of TLS several security flaws were found in different implementations, the research into TCP revealed ways to fingerprint remote operating systems.
