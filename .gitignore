@@ -24,3 +24,6 @@
 *.pdf
 *.fls
 *.fdb_latexmk
+
+*.sublime-project
+*.sublime-workspace
