@@ -37,7 +37,7 @@ The handshake used by TPK thus exists of three messages. Every message contains 
 
 The Setup messages are encapsulated in a Data frame and transmitted to the receiving STA through the AP and consequently secured by the RSNA with the AP.
 
-\subsubsection{TDLS Setup Request}
+\subsection{TDLS Setup Request}
 
 The first message in the setup procedure is used to initialise the TDLS setup. It contains all possible capabilities for the direct link and if security is required the first TDLS PMK handshake message.  This message will be send to the responder STA by the initiator STA.
 
@@ -68,11 +68,11 @@ The frame for the TDLS Setup Request contains the following information:
 
 The emphasised fields are the fields required for the TPK handshake.
 
-\subsubsection{TDLS Setup Response}
+\subsection{TDLS Setup Response}
 
 The second message in the setup procedure is a response by the responder STA to the request sent by the initiator STA. It contains the same information as the TDLS Setup Request and adds two new fields: Status Code and Operating Mode Notification (optional). Also, the value of the TDLS Action field will now be '1'.
 
-\subsubsection{TDLS Setup Confirm}
+\subsection{TDLS Setup Confirm}
 
 The third and last message is the final confirmation of the setup that is transmitted by the initiator STA to the responder STA in response to the TDLS Setup Response.
 
