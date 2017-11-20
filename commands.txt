@@ -1,0 +1,39 @@
+Installing dependencies:
+sudo apt-get install binutils-dev libssl-dev libdbus-1-dev libnl-3-dev apt-get install libnl-genl-3-200 libnl-genl-3-dev libnl-idiag-3-dev libsqlite3-dev libnl-route-3-dev libpcap-dev net-tools psmisc python-pip
+
+pip install pycrypto
+
+git clone git://w1.fi/hostap.git
+git checkout tags/hostap_2_6
+
+Wireshark filter:
+wlan.link_id.init_sta||wlan.link_id.resp_sta
+
+TDLS test:
+sudo ./run-tests.py ap_tdls_discovery
+sudo ./run-tests.py ap_wpa2_tdls
+sudo ./run-tests.py ap_wpa2_tdls_concurrent_init
+sudo ./run-tests.py ap_wpa2_tdls_concurrent_init2
+sudo ./run-tests.py ap_wpa2_tdls_decline_resp
+sudo ./run-tests.py ap_wpa2_tdls_long_lifetime
+sudo ./run-tests.py ap_wpa2_tdls_long_frame
+sudo ./run-tests.py ap_wpa2_tdls_reneg
+sudo ./run-tests.py ap_wpa2_tdls_wrong_lifetime_resp
+sudo ./run-tests.py ap_wpa2_tdls_diff_rsnie
+sudo ./run-tests.py ap_wpa2_tdls_wrong_tpk_m2_mic
+sudo ./run-tests.py ap_wpa2_tdls_wrong_tpk_m3_mic
+sudo ./run-tests.py ap_wpa_tdls
+sudo ./run-tests.py ap_wpa_mixed_tdls
+sudo ./run-tests.py ap_wep_tdls
+sudo ./run-tests.py ap_open_tdls
+sudo ./run-tests.py ap_wpa2_tdls_bssid_mismatch
+sudo ./run-tests.py ap_wpa2_tdls_responder_teardown
+sudo ./run-tests.py ap_open_tdls_vht
+sudo ./run-tests.py ap_open_tdls_vht80
+sudo ./run-tests.py ap_open_tdls_vht80plus80
+sudo ./run-tests.py ap_open_tdls_vht160
+sudo ./run-tests.py ap_tdls_chan_switch
+sudo ./run-tests.py ap_tdls_link_status
+sudo ./run-tests.py ap_tdls_prohibit
+sudo ./run-tests.py ap_tdls_chan_switch_prohibit
+sudo ./run-tests.py ap_open_tdls_external_control
