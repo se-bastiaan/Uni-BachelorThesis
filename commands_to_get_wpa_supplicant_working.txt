@@ -1,14 +1,35 @@
 Installing dependencies:
-sudo apt-get install binutils-dev libssl-dev libdbus-1-dev libnl-3-dev apt-get install libnl-genl-3-200 libnl-genl-3-dev libnl-idiag-3-dev libsqlite3-dev libnl-route-3-dev libpcap-dev net-tools psmisc python-pip
+sudo apt-get install binutils-dev libssl-dev libdbus-1-dev libnl-3-dev libnl-genl-3-200 libnl-genl-3-dev libnl-idiag-3-dev libsqlite3-dev libnl-route-3-dev libpcap-dev net-tools psmisc python-pip libiberty-dev libz-dev python-netifaces -y
 
 pip install pycrypto
+pip install scapy==2.3.3
 
 git clone git://w1.fi/hostap.git
+cd hostap
 git checkout tags/hostap_2_6
+
+build the binaries following the README in hostap/tests/hwsim
+
+cd ../../wpa_supplicant
+cp ../tests/hwsim/example-wpa_supplicant.config .config
+make clean
+make
+cd ../hostapd
+cp ../tests/hwsim/example-hostapd.config .config
+make clean
+make
+cd ../wlantest
+make clean
+make
+cd ../tests/hwsim
 
 Wireshark filter:
 wlan.link_id.init_sta||wlan.link_id.resp_sta
 
+POSSIBLY NEED TO DISABLE NETWORKMANAGER!!
+service NetworkManager stop
+
+First run: Run sudo ./start.sh
 TDLS test:
 sudo ./run-tests.py ap_tdls_discovery
 sudo ./run-tests.py ap_wpa2_tdls
