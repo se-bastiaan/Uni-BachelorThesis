@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.7
+
 from scapy.all import *
 import time
 import logging
@@ -18,9 +20,7 @@ from wlantest import Wlantest
 from test_ap_vht import vht_supported
 
 def main():
-    subprocess.call('bash ../hostap/tests/hwsim/stop.sh', shell=True)
+    subprocess.call('bash stop.sh', shell=True, cwd="../hostap/tests/hwsim/")
     subprocess.call('service NetworkManager start', shell=True)
-
-    init_stas()
 
 if  __name__ =='__main__':main()

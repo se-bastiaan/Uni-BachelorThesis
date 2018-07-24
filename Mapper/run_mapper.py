@@ -1,6 +1,13 @@
+#!/usr/bin/env python2.7
+
+from threading import Thread
+
+import socket
+
 from scapy.all import *
 import time
 import logging
+import time
 logger = logging.getLogger()
 import subprocess
 
@@ -17,58 +24,72 @@ from utils import HwsimSkip, skip_with_fips
 from wlantest import Wlantest
 from test_ap_vht import vht_supported
 
+from packets import *
+from tdls import *
 
-class Dot11TDLSAction(Packet):
-    name = "802.11 TDLS Action Frame"
-    fields_desc=[ 
-        ByteField("payload type", 2),
-        ByteField("category code", 12),
-        ByteEnumField("action", 1, { 0: "setup request", 1: "setup response" , 2: "setup confirm", 3: "teardown", 10: "discovery request" } ),
-        ByteField("dialog token", 1),
-    ]
+global waiting
 
-class Dot11Cap(Packet):
-    """ Our own definition for the supported rates field """
-    name = "802.11 Capabilities Information Element"
-    fields_desc = [
-        BitField("ess", 1, 1),
-        BitField("ibss", 1, 1),
-        BitField("cfp", 1, 1),
-        BitField("cfpr", 1, 1),
-        BitField("privacy", 1, 1),
-        BitField("shortpreamble", 1, 1),
-        BitField("ibss", 1, 1),
-        BitField("ess", 1, 1),
-        BitField("spectrum", 1, 1),
-        BitField("qos", 1, 1),
-        BitField("sst", 1, 1),
-        BitField("apsd", 1, 1),
-        BitField("rm", 1, 1),
-        BitField("reserved3", 1, 1),
-        BitField("dba", 1, 1),
-        BitField("iba", 1, 1),
-    ]
+def create_sniff_action(client):
+    def sniff_action(packet):
+        if Dot11TDLSAction in packet and waiting:
+            client.sendall(str(packet) + "\n")
+            # if packet[Dot11TDLSAction].action == 1:
+            #     confirm_packet = create_tdls_setup_confirm(gdcs=4, responsePacket=packet)
+            #     sendp(confirm_packet, iface='wlan1')
+            # elif packet[Dot11TDLSAction].action == 2:
+            #     teardown_packet = create_tdls_teardown()
+            #     sendp(teardown_packet, iface='wlan1')
+    return sniff_action
 
-class Dot11EltRates(Packet):
-    """ Our own definition for the supported rates field """
-    name = "802.11 Rates Information Element"
-    # We support all the rates
-    supported_rates = [0x02, 0x04, 0x0b, 0x16, 0x0c, 0x12, 0x18, 0x24, 0x30, 0x48, 0x60, 0x6c]
-    fields_desc = [ByteField("ID", 1), ByteField("len", len(supported_rates))]
-    for index, rate in enumerate(supported_rates):
-        fields_desc.append(ByteField("supported_rate{0}".format(index + 1),
-                                     rate))
+# def start_sniffer(client):
+#     sniff(prn=create_sniff_action(client), iface='wlan3')
+
+def start_timeout(client):
+    time.sleep(3000)
+    if waiting:
+        waiting = False
+        client.sendall("\n")
 
 def main():
-    packet = (Dot11TDLSAction(action=0) /
-        Dot11Cap())
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(("0.0.0.0", 8888))
+    s.listen(1)
 
-    print(packet)
+    (client, address) = s.accept()
 
-    sendp(Ether(src='02:00:00:00:00:00', dst='02:00:00:00:01:00', type=0x890d) / 
-        Dot11TDLSAction(action=0) /
-        Dot11Cap(),
-        iface='wlan0', verbose=True )
+    # sniffer = Thread(target=start_sniffer, args=(client,))
+    # sniffer.daemon = True
+    # sniffer.start()
 
+    while True:
+        cmd = client.recv(1024).strip()
+        print("Received cmd: {}".format(cmd))
+
+        waiting = True
+
+        if cmd == "SETUP_RESPONSE":
+            sendp(create_tdls_setup_response(gdcs=4), iface='wlan1', verbose=True)
+        elif cmd == "SETUP_CONFIRM":
+            sendp(create_tdls_setup_confirm(gdcs=4), iface='wlan1', verbose=True)
+        elif cmd == "SETUP_REQUEST":
+            sendp(create_tdls_setup_request(gdcs=4), iface='wlan1', verbose=True)
+        elif cmd == "TEARDOWN":
+            sendp(create_tdls_teardown(), iface='wlan1', verbose=True)
+        elif cmd == "RESET":
+            pass
+
+        packets = sniff(iface='wlan3', timeout=5, lfilter = lambda x: Dot11TDLSAction in x)
+        if len(packets) > 0:
+            print("Packets: {}".format(str(packets[0].action)))
+            client.sendall("{}\n".format(str(packets[0].action)))
+            print("Sending to learner: `{}`".format(str(packets[0].action)))
+        else:
+            client.sendall("NO_RESPONSE\n")
+            print("Sending to learner: `NO_RESPONSE`")
+
+    # while True:
+    #     sniffer.join(600)
+    #     if not sniffer.isAlive():
+    #         break
 
 if  __name__ =='__main__':main()

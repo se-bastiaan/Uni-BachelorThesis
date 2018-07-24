@@ -1,47 +1,57 @@
 \section{Tunneled Direct-Link Setup}\label{tdls}
 
 \iffalse
-- What is TDLS?
-- Why TDLS?
-- How does it work exactly?
+- TDLS
+	- 802.11
+	- PeerKey
 \fi
 
 \subsection{General}
 
-Tunneled Direct-Link Setup (TDLS) is a protocol that allows two devices (stations, STAs) connected to a wireless network based on the 802.11 specification, more commonly known as Wi-Fi, to create a direct link after connecting to the same network. This allows these devices to transmit data without the need for an access point (AP) STA, the device that usually manages the connection\cite{tdlspress}. This direct link is supposed to improve the network performance. It should reducy latency caused by heavy traffic on the access point and prevent interference. This all improves the user experience and thus TDLS was added to the 802.11 specification in 2010 and certified by the Wi-Fi Alliance in 2012.
+Tunneled Direct-Link Setup (TDLS) is a part of the IEEE 802.11 specification\cite{ieee80211} that allows two devices to create a direct connection. This specification is more commonly known as Wi-Fi and allows devices to establish a wireless local area network.
 
-The TDLS specification also allows two devices to communicate on a higher level of security than the AP might support. Thus improving the overall security of the network. Consequently making the protocol interesting for research.
+A 802.11 network exists of one or more stations (STAs). One station operates as access point (AP) to facilitate the BSS. All traffic from stations connected to the network travels via that access point. TDLS allows stations connected to the access point to simultaneously set up a direct link between two stations. This reduces the amount of traffic transferred via the access point and avoids congestion inside that access point.
 
-\subsection{TPK}
+\subsection{Establishing a direct-link}
 
-Establishing a secure direct link via TDLS uses the TDLS PeerKey (TPK) security protocol. This protocol is executed between two STAs that are not access points. It is intended to establish an robust secure network association (RSNA). Obviously, an unsecured connection is also possible. However, STAs have the ability to refuse a direct link when the link between the STA and the AP is using a weak security protocol or not using any security at all. 
+To establish a direct-link we need two stations. One of the stations is called the \emph{initiator}, the other is the \emph{responder}. The messages they use to manage their connection are shown in figure \ref{fig:mcs}. The first message in the exchange to establish a new link is send by the initiator to the responder, who proposes a direct-link based on similar capabilities of the two stations. The responder replies either with a status code indicating success or failure in the setup response. The receival of this message is then confirmed by the last message in this part of the exchange. If any of the two stations wants to sever the direct link they can do this by sending a teardown message.
 
-\subsubsection{TPK Handshake}
+All messages, except for the teardown message, are always send through the access point encapsulated in an ethernet frame. The teardown message can both be send through the access point or directly to the receiving station.
 
-The TPK handshake is a part of the TDLS setup procedure. This procedure results in a TDLS PeerKey Security Association (TPKSA) once the TPK handshake is successfully completed. This provides confidentiality and data origin authentication.
+If the stations are connected to an access point with any kind of security enabled then the messages used to set up a new direct-link shall contain the fields for the TDLS PeerKey (TPK) handshake.
 
-The TDLS STA that is initiating the connection and the responding TDLS STAs need to setup an RSNA with the AP before trying a TPK handshake. 
+\begin{figure}[!h]
+	\centering
+	\caption{The TDLS direct-link establishment}
+	\includegraphics[height=200pt]{mcs}
+	\label{fig:mcs}
+\end{figure}
 
-To set up a TPK the TDLS initiating STA and the TDLS responding STA execute an exchange of messages:
+\subsection{TDLS PeerKey}
 
+\iffalse
+\subsection{General}
+
+Tunneled Direct-Link Setup (TDLS) is a protocol that allows two devices (stations, STAs) connected to a wireless network based on the 802.11 specification, more commonly known as Wi-Fi, to create a direct link after connecting to the same network. This allows these devices to transmit data without the need for an access point (AP) STA, the device that usually manages the connection\cite{tdlspress}. This direct link is supposed to improve the network performance. It should reduce latency caused by heavy traffic on the access point and prevent interference. This all improves the user experience and thus TDLS was added to the 802.11 specification in 2010 and certified by the Wi-Fi Alliance in 2012.
+
+The TDLS specification also allows two devices to communicate on a higher level of security than the AP might support. This improves the overall security of the network. Consequently making the protocol interesting for research.
+
+\subsection{TDLS Setup}
+
+TDLS can be setup by using a set of three messages:
 \begin{itemize}
-	\item[] \textbf{TDLS PMK handshake message 1}\\ TDLS initiator STA$\,\to\,$TDLS responder STA:\\
-	Link identifier element, Robust Network Network Element (RSNE), Timeout Interval element, Fast Transition Element (FTE)
-	\item[] \textbf{TDLS PMK handshake message 2}\\ TDLS responder STA$\,\to\,$TDLS initiator STA:\\
-	Link identifier element, Robust Network Network Element (RSNE), Timeout Interval element, Fast Transition Element (FTE)
-	\item[] \textbf{TDLS PMK handshake message 3}\\ TDLS initiator STA$\,\to\,$TDLS responder STA:\\
-	Link identifier element, Robust Network Network Element (RSNE), Timeout Interval element, Fast Transition Element (FTE)
+	\item Setup Request
+	\item Setup Response
+	\item Setup Confirm
 \end{itemize}
-
-The handshake used by TPK thus exists of three messages. Every message contains a couple of elements and is included in the TDLS Setup Request, TDLS Setup Response or TDLS Setup Confirm messages used in the TDLS Setup protocol.
 
 The Setup messages are encapsulated in a Data frame and transmitted to the receiving STA through the AP and consequently secured by the RSNA with the AP.
 
-\subsection{TDLS Setup Request}
+\subsubsection{Setup Request}
 
 The first message in the setup procedure is used to initialise the TDLS setup. It contains all possible capabilities for the direct link and if security is required the first TDLS PMK handshake message.  This message will be send to the responder STA by the initiator STA.
 
-The frame for the TDLS Setup Request contains the following information:
+The frame for the TDLS Setup Request contains the following fields:
 
 \begin{itemize}
 	\item Category: 12
@@ -68,11 +78,27 @@ The frame for the TDLS Setup Request contains the following information:
 
 The emphasised fields are the fields required for the TPK handshake.
 
-\subsection{TDLS Setup Response}
+% Elaborate on TPK Handshake FTE values
+% Elaborate on RSNE
 
-The second message in the setup procedure is a response by the responder STA to the request sent by the initiator STA. It contains the same information as the TDLS Setup Request and adds two new fields: Status Code and Operating Mode Notification (optional). Also, the value of the TDLS Action field will now be '1'.
+% Snonce S1HK, Anonce A1HK (
+% The MIC field contains a MIC that is calculated using the algorithm specified in 13.8.4 and 13.8.5.
+% The ANonce field contains a value chosen by the R1KH. It is encoded following the conventions in 9.2.2. 
+% The SNonce field contains a value chosen by the S1KH. It is encoded following the conventions in 9.2.2.)
 
-\subsection{TDLS Setup Confirm}
+\subsubsection{Setup Response}
+
+The second message in the setup procedure is a response by the responder STA to the request sent by the initiator STA. It contains the same information as the TDLS Setup Request and adds two new fields: Status Code and Operating Mode Notification (optional). Also, the value of the TDLS Action field will now be '1'. Moreover, the FTE field will contain more information to complete the authentication.
+
+\begin{itemize}
+	\item TDLS Action: 1
+	\item Status Code
+	\item Operating Mode Notification
+\end{itemize} 
+
+% What about the ANonce and MIC?
+
+\subsubsection{Setup Confirm}
 
 The third and last message is the final confirmation of the setup that is transmitted by the initiator STA to the responder STA in response to the TDLS Setup Response.
 
@@ -83,10 +109,98 @@ The third and last message is the final confirmation of the setup that is transm
 	\item Dialog Token
 	\item \emph{RSNE (TPK)}
 	\item EDCA Parameter Set
-	\item \emph{FTE, in this case specifically the SNonce}
+	\item \emph{FTE}
 	\item \emph{Timeout Interval (TPK)}
 	\item HT Operation
 	\item \emph{Link Identifier}
 	\item VHT Operation
 	\item Operating Mode Notification
 \end{itemize}
+
+\subsection{TDLS PeerKey}
+
+Establishing a secure direct link via TDLS uses the TDLS PeerKey (TPK) security protocol. This protocol is only executed between two STAs that are not access points. It is intended to establish an robust secure network association (RSNA). Obviously, an unsecured connection is also possible. However, STAs have the ability to refuse a direct link when the link between the STA and the AP is using a weak security protocol or not using any security at all. 
+
+The TPK handshake is a part of the TDLS setup procedure. This procedure results in a TDLS PeerKey Security Association (TPKSA) once the TPK handshake is successfully completed. This provides confidentiality and data origin authentication.
+
+The TDLS STA that is initiating the connection and the responding TDLS STAs need to setup an RSNA with the AP before trying a TPK handshake. 
+
+To set up a TPK the TDLS initiating STA and the TDLS responding STA execute an exchange of messages:
+
+\begin{itemize}
+	\item[] \textbf{TDLS PMK handshake message 1}\\ TDLS initiator STA$\,\to\,$TDLS responder STA:\\
+	Link identifier element, Robust Secure Network Element (RSNE), Timeout Interval element, Fast Transition Element (FTE)
+	\item[] \textbf{TDLS PMK handshake message 2}\\ TDLS responder STA$\,\to\,$TDLS initiator STA:\\
+	Link identifier element, Robust Secure Network Element (RSNE), Timeout Interval element, Fast Transition Element (FTE)
+	\item[] \textbf{TDLS PMK handshake message 3}\\ TDLS initiator STA$\,\to\,$TDLS responder STA:\\
+	Link identifier element, Robust Secure Network Element (RSNE), Timeout Interval element, Fast Transition Element (FTE)
+\end{itemize}
+
+The handshake used by TPK thus exists of three messages. Every message contains a couple of elements and is included in the TDLS Setup Request, TDLS Setup Response or TDLS Setup Confirm messages used in the TDLS Setup protocol described previously.
+
+\subsubsection{Link Identifier Element}
+
+The Link Identifier Element is the part of the packet that identifies a TDLS link.
+It consists of:
+
+\begin{itemize}
+	\item The BSSID of the BSS the STAs are associated to
+	\item The TDLS initiator STA's MAC address
+	\item The TDLS response STA's MAC address
+\end{itemize}
+
+
+\subsubsection{Robust Secure Network Element}
+
+The Robust Secure Network Element or RSNE holds the information identifies which cipher suite is used to protect the frame send over the direct link and which method of authentication is used for that same direct link.
+
+\subsubsection{Time Interval Element}
+
+This Time Interval Element determines the lifetime of the key that is established during the handshake.
+
+\subsubsection{Fast Transition Element}
+
+The Fast Transition Element (FTE) contains three important elements for the TDLS handshake.
+
+\begin{itemize}
+	\item SNonce\\ A 256-bit random value generated by the initiator STA, present in all messages of the handshake.
+	\item ANonce\\ A 256-bit random value generated by the responder STA, not present in the first message of the handshake.
+	\item MIC\\ The Message Integrity Code, computed from other values in the message and not present in the first message of the handshake.
+\end{itemize}
+
+\subsubsubsection{MIC Computatation}
+
+The computation of the MIC is a concatenation of values taken from the message.
+
+\begin{itemize}
+	\item MAC address of the initiator STA
+	\item MAC address of the responder STA
+	\item Transaction Sequence number set to the value 2 or 3 for those specific messages
+	\item Link Identifier Element
+	\item RSNE
+	\item Timeout Interval element
+	\item FTE, with the MIC field set to 0.
+\end{itemize}
+
+This concatenation is used in the computation as input for TPK-KCK and AES-128-CMAC.
+
+The TPK-KCK (TDLS PeerKey Key Confirmation Key) consists of the first 128 bits of the TPK.
+This TPK is calculated in the following way:
+
+\begin{gather}
+Input = Hash(min(SNonce, ANonce) \| max(SNonce, ANonce))\\
+MACS = min(MAC_I, MAC_R) \| max (MAC_I, MAC_R) \| BSSID\\
+TPK = KDF(Input, "TDLS PMK", MACS)
+\end{gather}
+
+where
+
+\begin{itemize}
+	\item The SNonce and ANonce are the values generated by the Initiator and Responder STA respectively.
+	\item The MAC_I and MAC_R are the MAC addresses of the Initiator and Responder STA respectively.
+	\item The BSSID is the BSSID of the current BSS of the Initiator STA
+	\item The KDF function is the KDF-Hash-Length key derivation function defined in 12.7.1.7.2 of \cite{ieee80211}
+	\item The Hash function is the hash algorithm defined in the RSNE
+\end{itemize}
+
+\fi
