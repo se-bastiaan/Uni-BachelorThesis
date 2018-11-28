@@ -6,6 +6,7 @@ import hashlib
 import hmac
 from Crypto.Cipher import AES
 from Crypto.Hash import CMAC
+from HandleAES import HandleAES
 
 def _read_fte_values(info):
     mic_control = info[0:2]
@@ -22,7 +23,6 @@ def _read_link_id_values(info):
     return BSSID, InitiatorMAC, ResponderMAC
 
 def read_tdls_setup_packet(packet):
-    # TODO: Read ANonce
     elts = packet[Dot11EltCustom]
     index = 0
     
@@ -102,6 +102,10 @@ def create_tdls_setup_response(bssid="02:00:00:00:03:00",
             packet /= TimeoutEl
     return packet
 
+def get_tpk_from_setup_packet(packet):
+    ANonce, SNonce, BSSID, InitiatorMAC, ResponderMAC = read_tdls_setup_packet(packet)
+    return calculate_tpk(ANonce, SNonce, BSSID, InitiatorMAC, ResponderMAC)
+
 def calculate_tpk(ANonce, SNonce, BSSID, InitiatorMAC, ResponderMAC):
     # TPK-Key-Input = SHA-256(min(SNonce, ANonce) || max(SNonce, ANonce))
     tpkKeyInput = hashlib.sha256(min(ANonce , SNonce) + max(ANonce, SNonce)).digest()
@@ -121,7 +125,6 @@ def calculate_tpk(ANonce, SNonce, BSSID, InitiatorMAC, ResponderMAC):
 
 def calculate_mic(TPK, InitiatorMAC, ResponderMAC, TransSeqNr, LinkIdEl, RSNEEl, TimeoutEl, FTEl):
     frame = InitiatorMAC + ResponderMAC + struct.pack('<B', TransSeqNr) + str(LinkIdEl) + str(RSNEEl) + str(TimeoutEl) + str(FTEl)
-    print("Data for FTIE MIC: {}", binascii.hexlify(frame))
     mic = CMAC.new(TPK[0:16], ciphermod=AES)
     mic.update(frame)
     mic_digest = mic.digest()[0:16]
@@ -155,3 +158,10 @@ def create_tdls_setup_confirm(bssid="02:00:00:00:03:00",
 def create_tdls_teardown(bssid="02:00:00:00:03:00",
     initSta="02:00:00:00:01:00", respSta="02:00:00:00:00:00"):
     return Ether(src=initSta, dst=respSta, type=0x890d)  / Dot11TDLSAction(action=3) / Dot11EltLinkIdentifier(bssid=bssid, initSta=initSta, respSta=respSta)
+
+def create_ping_message(response=False):
+    bssid, addr0, addr1 = "20:00:00:00:03:00", "20:00:00:00:01:00", "f0:18:98:46:e5:9a"
+    packet = Ether(src=addr0, dst=addr1, type=0x0006) / Raw(load="HELLO_RESP")
+    if response:
+        packet = Ether(src=addr1, dst=addr0, type=0x0006) / Raw(load="HELLO_INIT")
+    return packet

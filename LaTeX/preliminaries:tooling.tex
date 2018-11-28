@@ -1,0 +1,11 @@
+\section{Tooling}
+
+\subsection{LearnLib}
+
+The first of the tools used to execute our research is LearnLib \footnote{https://learnlib.de/}. This is, as they call it, "an open framework for automata learning". It is free and open source under the Apache 2.0 License. The development is executed at the Char for Programming Systems of TU Dortmund University in Germany, where it was introduced by Malte et al. \cite{Malte:2015}. 
+LearnLib features both multiple learning algorithms and multiple strategies to approximate equivalence, of which L* and random words are used in this thesis.
+The version used in this thesis, 0.12.0, was released in June 2015. The latest version (0.13.1) was released in May 2018 since development was picked up again. However, since we're not using LearnLib directly but via StateLearner we're not able to use the latest version.
+
+\subsection{StateLearner}
+
+The second tool is called StateLearner \footnote{https://github.com/jderuiter/statelearner}, developed by Joeri de Ruiter. This tool is based on LearnLib and is tailored to automated model learning. It connects to the implementation of the subject either directly or via a mapper. In our case a mapper takes the symbols of the input alphabet that we provide StateLearner with and maps those symbols to the appropriate messages. The responses are then once again mapped to symbols that form the output alphabet. This way we can use StateLearner to form hypotheses using LearnLib.

@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[x11names, rgb]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{snakes,arrows,shapes}
+\usepackage{amsmath}
+%
+%
+
+%
+
+%
+
+\begin{document}
+\pagestyle{empty}
+%
+%
+%
+
+\enlargethispage{100cm}
+% Start of code
+% \begin{tikzpicture}[anchor=mid,>=latex',line join=bevel,]
+\begin{tikzpicture}[>=latex',line join=bevel,]
+  \pgfsetlinewidth{1bp}
+%%
+\pgfsetcolor{black}
+  % Edge: s2 -> s1
+  \draw [->] (450.37bp,36.04bp) .. controls (447.38bp,47.022bp) and (441.83bp,60.363bp)  .. (431.67bp,68.0bp) .. controls (412.63bp,82.316bp) and (255.79bp,96.48bp)  .. (180.79bp,102.6bp);
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (565.29bp,61.0bp) node {SETUP\_REQUEST / SETUP\_RESPONSE};
+  % Edge: s0 -> s1
+  \draw [->] (410.53bp,188.89bp) .. controls (353.38bp,185.2bp) and (179.9bp,172.56bp)  .. (163.44bp,154.0bp) .. controls (158.15bp,148.04bp) and (156.56bp,139.93bp)  .. (157.69bp,121.79bp);
+  \draw (285.29bp,147.0bp) node {SETUP\_REQUEST / SETUP\_RESPONSE};
+  % Edge: s1 -> s0
+  \draw [->] (180.73bp,104.45bp) .. controls (230.98bp,106.04bp) and (371.09bp,112.87bp)  .. (406.67bp,140.0bp) .. controls (413.94bp,145.54bp) and (418.85bp,153.99bp)  .. (425.33bp,172.01bp);
+  \draw (539.09bp,147.0bp) node {TEARDOWN / TEARDOWN\_TIMEOUT};
+  % Edge: s0 -> s0
+  \draw [->] (446.83bp,192.17bp) .. controls (456.21bp,192.5bp) and (464.67bp,191.78bp)  .. (464.67bp,190.0bp) .. controls (464.67bp,188.91bp) and (461.53bp,188.22bp)  .. (446.83bp,187.83bp);
+  \draw (693.36bp,190.0bp) node {SETUP\_CONFIRM / SETUP\_CONFIRM\_WITHOUT\_RESPONSE\_TIMEOUT};
+  % Edge: s0 -> s0
+  \draw [->] (446.75bp,191.61bp) .. controls (536.66bp,195.94bp) and (922.04bp,195.4bp)  .. (922.04bp,190.0bp) .. controls (922.04bp,184.78bp) and (562.55bp,184.1bp)  .. (446.75bp,188.39bp);
+  \draw (1042.5bp,190.0bp) node {TEARDOWN / TEARDOWN\_TIMEOUT};
+  % Edge: s0 -> s0
+  \draw [->] (446.92bp,191.99bp) .. controls (561.86bp,198.94bp) and (1162.9bp,198.28bp)  .. (1162.9bp,190.0bp) .. controls (1162.9bp,181.94bp) and (593.14bp,181.1bp)  .. (446.92bp,188.01bp);
+  \draw (1271.0bp,190.0bp) node {CONNECTED / NOT\_CONNECTED};
+  % Edge: s1 -> s1
+  \draw [->] (180.46bp,107.78bp) .. controls (189.99bp,108.42bp) and (198.67bp,107.16bp)  .. (198.67bp,104.0bp) .. controls (198.67bp,102.08bp) and (195.45bp,100.86bp)  .. (180.46bp,100.22bp);
+  \draw (320.29bp,104.0bp) node {SETUP\_REQUEST / SETUP\_RESPONSE};
+  % Edge: s1 -> s1
+  \draw [->] (180.68bp,107.54bp) .. controls (243.68bp,114.33bp) and (441.91bp,113.15bp)  .. (441.91bp,104.0bp) .. controls (441.91bp,95.3bp) and (262.57bp,93.809bp)  .. (180.68bp,100.46bp);
+  \draw (550.01bp,104.0bp) node {CONNECTED / NOT\_CONNECTED};
+  % Edge: s2 -> s2
+  \draw [->] (471.46bp,21.775bp) .. controls (480.99bp,22.417bp) and (489.67bp,21.158bp)  .. (489.67bp,18.0bp) .. controls (489.67bp,16.075bp) and (486.45bp,14.856bp)  .. (471.46bp,14.225bp);
+  \draw (703.97bp,18.0bp) node {SETUP\_CONFIRM / SETUP\_CONFIRM\_WITH\_RESPONSE\_TIMEOUT};
+  % Edge: s2 -> s2
+  \draw [->] (471.5bp,20.874bp) .. controls (557.78bp,28.392bp) and (918.27bp,27.434bp)  .. (918.27bp,18.0bp) .. controls (918.27bp,8.8981bp) and (582.68bp,7.6861bp)  .. (471.5bp,15.126bp);
+  \draw (1008.5bp,18.0bp) node {CONNECTED / CONNECTED};
+  % Edge: __start0 -> s0
+  \draw [->] (428.67bp,244.96bp) .. controls (428.67bp,236.88bp) and (428.67bp,227.18bp)  .. (428.67bp,208.09bp);
+  % Edge: s2 -> s0
+  \draw [->] (471.74bp,19.403bp) .. controls (524.64bp,23.691bp) and (676.36bp,37.352bp)  .. (690.67bp,54.0bp) .. controls (694.73bp,58.719bp) and (691.02bp,61.787bp)  .. (690.67bp,68.0bp) .. controls (688.46bp,108.0bp) and (697.38bp,132.35bp)  .. (663.67bp,154.0bp) .. controls (629.9bp,175.7bp) and (511.76bp,185.21bp)  .. (446.9bp,189.11bp);
+  \draw (810.09bp,104.0bp) node {TEARDOWN / TEARDOWN\_TIMEOUT};
+  % Edge: s1 -> s2
+  \draw [->] (144.51bp,102.68bp) .. controls (106.51bp,99.487bp) and (20.642bp,89.962bp)  .. (3.0819bp,68.0bp) .. controls (-0.80378bp,63.14bp) and (-1.1391bp,58.572bp)  .. (3.0819bp,54.0bp) .. controls (17.467bp,38.42bp) and (328.84bp,23.483bp)  .. (435.57bp,18.766bp);
+  \draw (217.97bp,61.0bp) node {SETUP\_CONFIRM / SETUP\_CONFIRM\_WITH\_RESPONSE\_TIMEOUT};
+  % Node: s2
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (453.67bp,18.0bp) node {2};
+\end{scope}
+  % Node: s1
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (162.67bp,104.0bp) node {1};
+\end{scope}
+  % Node: s0
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (428.67bp,190.0bp) node {0};
+\end{scope}
+%
+\end{tikzpicture}
+% End of code
+
+%
+\end{document}
+%
+
+
+

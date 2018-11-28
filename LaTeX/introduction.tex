@@ -4,7 +4,7 @@
 The introduction of your bachelor thesis introduces the research area, the
 research hypothesis, and the scientific contributions of your work.
 A good narrative structure is the one suggested by Simon Peyton Jones
-\cite{ieee80211}:
+\cite{80211}:
 %
 \begin{itemize}
 \item describe the problem / research question
@@ -17,4 +17,6 @@ A good narrative structure is the one suggested by Simon Peyton Jones
 \fi
 
 
-A lot has changed since the introduction of personal computers. Networks have been set-up everywhere and smartphones have been invented. With the introduction of new technologies also came the interest into the protection of data sent using the internet. The most used wireless internet protocol is defined in the 802.11 specification \cite{ieee80211} and is more commonly known as ‘Wi-Fi’. Part of this specification is a way to let clients (stations, STAs) communicate without severing the connection to the shared access point (AP), this is called a Tunneled Direct Link Set-up (TDLS).  This specific part of the specification introduces a protocol handshake which is used to secure the link. We want to look into this part of the specification, analyse the implementation to find out if this handshake is properly executed. Since the protocol is intended for public use, people should be able to rely on the handshake to be completely secure. Analysing the implementation will make sure the public can use the TDLS functionality without worrying about how secure their connection is.
+A lot has changed since the introduction of personal computers. Networks have been set-up everywhere and smartphones have been invented. With the introduction of new technologies also came the interest into the protection of data sent using the internet. The most used wireless internet protocol is defined in the 802.11 specification \cite{80211} and is more commonly known as ‘Wi-Fi’. Part of this specification is a way to let clients (stations, STAs) communicate without severing the connection to the shared access point (AP), this is called a Tunneled Direct Link Set-up (TDLS).  This specific part of the specification introduces a protocol handshake which is used to secure the link. We want to look into this part of the specification, analyse the implementation to find out if this handshake is properly executed. Since the protocol is intended for public use, people should be able to rely on the handshake to be completely secure. Analysing the implementation will make sure the public can use the TDLS functionality without worrying about how secure their connection is. The analysis executed in this thesis will use the learning algorithm L* to infer the state machine of the TDLS implementation. This state machine will be checked by using the algorithm randomwords. To create the packets used during the inferring we will use a mapper written in Python using ScaPy.
+
+This thesis is structured as follows: firstly we will discuss the TDLS protocol and the 802.11 specification. Next we will take a look at Mealy machines and how to infer that kind of state machines using the previously mentiond algorithms. Consequently we will explain how we implemented our mapper and how it works in our setup. Lastly we will analyse the inferred state machines by comparing them to the specification.
