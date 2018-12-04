@@ -1,1 +1,34 @@
 \chapter{Results}
+
+Our final learned state machine is of version 2.7 of wpa\_supplicant. This version was released in December 2018. We previously used the same procedure to learn the state machine of version 2.6 which resultated in the same graph. The inferred model can be found in Appendix \ref{appendix:a}.
+
+\section{Expectectations}
+
+We expect that the TDLS state machine has three states:
+\begin{enumerate}
+	\item No TDLS connection
+	\item Setup in progress
+	\item Active TLDS connection
+\end{enumerate}
+
+If we follow the 802.11 specification we should have at least the following edges:
+\begin{itemize}
+	\item State 1 to 2: TDLS Setup Request resulting in a TDLS Setup Response with status code SUCCESS (11.23.4)
+	\item State 2 to 3: TDLS Setup Confirm without response
+	\item State 3 to 1: TDLS Teardown without response
+	\item State 3 to 2: TDLS Setup Request resulting in a TDLS Setup Response (11.23.4 sub e \cite{80211})
+\end{itemize}
+
+Since we do not get a response from all requesting messages the mapper will, as previously mentioned, make assumptions on the status of the connection. This means that every state will also have an edge indicating the status.
+
+\section{Analysis}
+
+The state machine learned by the L* algorithm does not deviate from the previously mentioned requirements of the implementation. It has more edges than mentioned. These edges would not cause any differences, since the state stays the same. This is a reflection from the specification, without the current message order no action should be taken. However, that the state machine is not different may be influenced by the assumption made by the mapper. Since we could not find a working procedure to check if a TDLS connection was setup successfully this was to only way to obtain a seemingly valid model.
+
+\section{Interesting findings}
+
+\begin{enumerate}
+	\item WPA supplicant tests do not really rely on communication to check a tdls connection
+	\item No support for channel switch in hwsim
+	\item No response from interface at all, may be driver is the issue?
+\end{enumerate}

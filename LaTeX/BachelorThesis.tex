@@ -13,6 +13,7 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{graphicx}  
+\usepackage[toc,page]{appendix}
 \usepackage[a4paper]{geometry}
 
 \usetikzlibrary{matrix,shapes,arrows,positioning,chains,calc}
@@ -83,7 +84,8 @@ title, name\\
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
-\appendix
-\input{appendix}
+\begin{appendices}
+\input{appendix:a}
+\end{appendices}
 
 \end{document}

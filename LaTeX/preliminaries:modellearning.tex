@@ -17,7 +17,7 @@ Since a Mealy machine is deterministic the state machine has only one transition
 
 \subsection{Learning state machines}
 
-Our goal is to learn a state machine of a TDLS implementation. We're approaching this by using the L* algorithm \cite{lstar}. The goal of this algorithm is to learn a finite state machine from a so-called \emph{teacher}. This teacher can be any type of computational system.
+Our goal is to learn a state machine of a TDLS implementation. We're approaching this by using the L* algorithm \cite{Angluin:1987}. The goal of this algorithm is to learn a finite state machine from a so-called \emph{teacher}. This teacher can be any type of computational system.
 The L* algorithm is run by the learner, who tries to communicate with the teacher to infer the state machine of that teacher. In our learning process this teacher will be an implementation of TDLS.
 
 \subsubsection{Learning process}

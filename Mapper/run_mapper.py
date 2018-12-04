@@ -45,20 +45,20 @@ def main():
         timeout_response = "NO_RESPONSE"
 
         if cmd == "SETUP_CONFIRM":
-            timeout_response = "SETUP_CONFIRM_WITHOUT_RESPONSE_TIMEOUT"
+            # timeout_response = "SETUP_CONFIRM_WITHOUT_RESPONSE_TIMEOUT"
             if setup_response_packet:
                 connected = True
-                timeout_response = "SETUP_CONFIRM_WITH_RESPONSE_TIMEOUT"
+                # timeout_response = "SETUP_CONFIRM_WITH_RESPONSE_TIMEOUT"
             # setup_response_packet = Nonecv
             sendp(create_tdls_setup_confirm(gdcs=4, responsePacket=setup_response_packet), iface='wlan1', verbose=verbose)
         elif cmd == "SETUP_REQUEST":
             connected = False
-            timeout_response = "SETUP_REQUEST_TIMEOUT"
+            # timeout_response = "SETUP_REQUEST_TIMEOUT"
             sendp(create_tdls_setup_request(gdcs=4), iface='wlan1', verbose=verbose)
             setup_response_packet = None
         elif cmd == "TEARDOWN":
             connected = False
-            timeout_response = "TEARDOWN_TIMEOUT"
+            # timeout_response = "TEARDOWN_TIMEOUT"
             sendp(create_tdls_teardown(), iface='wlan1', verbose=verbose)
             setup_response_packet = None
         elif cmd == "RESET":
