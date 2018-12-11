@@ -1,8 +1,8 @@
 \chapter{Results}
 
-Our final learned state machine is of version 2.7 of wpa\_supplicant. This version was released in December 2018. We previously used the same procedure to learn the state machine of version 2.6 which resultated in the same graph. The inferred model can be found in Appendix \ref{appendix:a}.
+In this chapter we state our expectations of the inferred model. Next we evaluate the results of the learner by comparing them to our expectations using a manual analysis.
 
-\section{Expectectations}
+\section{Expectations}
 
 We expect that the TDLS state machine has three states:
 \begin{enumerate}
@@ -13,10 +13,10 @@ We expect that the TDLS state machine has three states:
 
 If we follow the 802.11 specification we should have at least the following edges:
 \begin{itemize}
-	\item State 1 to 2: TDLS Setup Request resulting in a TDLS Setup Response with status code SUCCESS (11.23.4)
-	\item State 2 to 3: TDLS Setup Confirm without response
-	\item State 3 to 1: TDLS Teardown without response
-	\item State 3 to 2: TDLS Setup Request resulting in a TDLS Setup Response (11.23.4 sub e \cite{80211})
+	\item State 0 to 1: TDLS Setup Request resulting in a TDLS Setup Response with status code SUCCESS (\cite[11.23.4]{80211})
+	\item State 1 to 2: TDLS Setup Confirm without response
+	\item State 2 to 0: TDLS Teardown without response
+	\item State 2 to 1: TDLS Setup Request resulting in a TDLS Setup Response (11.23.4 sub e \cite{80211})
 \end{itemize}
 
 Since we do not get a response from all requesting messages the mapper will, as previously mentioned, make assumptions on the status of the connection. This means that every state will also have an edge indicating the status.

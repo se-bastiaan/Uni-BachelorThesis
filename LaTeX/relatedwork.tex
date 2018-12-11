@@ -1,14 +1,4 @@
 \chapter{Related Work}\label{relatedwork}
-\iffalse
-In this chapter you demonstrate that you are sufficiently aware of the
-state-of-art knowledge of the problem domain that you have investigated as
-well as demonstrating that you have found a \emph{new} solution / approach / method.
-
-TODO: Add paper by Joeri.
-Bachelorthesises by Jules, Bart, Max
-State machines in network and security protocols
-Wi-Fi stuff
-\fi
 
 In this chapter we give an overview of all previous work related to the security of Wi-Fi and/or the use of models to test or infer state machines.
 
@@ -18,7 +8,7 @@ The authentication of clients with access points within the 802.11 specification
 
 The 4-Way Handshake has also been subject of numerous formal analyses \cite{He:2004,Dong:2009,Xing:2008,He:2005}. Other parts of 802.11, but related to the 4-way handshake, that have been the subject of research are the WEP and WPA2 TKIP security mechanisms \cite{Fluhrer:2001,Vanhoef:2013}.
 
-More in-depth research into the handshake discovered a vulnerability in the transmission of the group-key \cite{Vanhoef:2016}. This research by Vanhoef et al. forced RC4 encryption of the group key, which is insecure \cite{Fluhrer:2001}. Following this discovery Vanhoef et al. introduced an attack that reinstalls the key used by the 4-way handshake making replaying, decryption and forging of packets possible \cite{Vanhoef:2017-2}.
+More in-depth research into the handshake discovered a vulnerability in the transmission of the group-key \cite{Vanhoef:2016}. This research by Vanhoef et al. forced RC4 encryption of the group key, which is insecure \cite{Fluhrer:2001}. Following this discovery Vanhoef et al. introduced an attack that re-installs the key used by the 4-way handshake making replaying, decryption and forging of packets possible \cite{Vanhoef:2017-2}.
 
 We are not aware of any previous work on the Tunneled Direct-Link Setup functionality of the 802.11 specification.
 

@@ -68,7 +68,6 @@ def main():
             client.sendall("{}\n".format("NO_RESPONSE"))
             continue
         elif cmd == "CONNECTED":
-            setup_response_packet = None
             timeout_response = "CONNECTED" if connected else "NOT_CONNECTED"
 
         response_msg = timeout_response

@@ -4,7 +4,7 @@ As previously mentioned StateLearner requires a mapper to send and receive messa
 
 \subsection{Scapy}
 
-Scapy \footnote{https://github.com/secdev/scapy} is a Python program that allows you to capture, manipulate and send network packets. This open source library was used to create the 802.11 TDLS packets and wrap them inside ethernet frames. Scapy itself has support for the basic 802.11 packets that are part of the specification. The 802.11 specification actually identifies packets as a piece of base information, the action that should be executed and so-called elements that can differ based on the action requested. Scapy implements packets that could be used for the normal 4-way handshake, but it does not implement any TDLS messages.
+Scapy \footnote{https://github.com/secdev/scapy} is a Python program that allows you to capture, manipulate and send network packets. This open source library was used to create the 802.11 TDLS packets and wrap them inside Ethernet frames. Scapy itself has support for the basic 802.11 packets that are part of the specification. The 802.11 specification actually identifies packets as a piece of base information, the action that should be executed and so-called elements that can differ based on the action requested. Scapy implements packets that could be used for the normal 4-way handshake, but it does not implement any TDLS messages.
 This means that we implemented the complete messages used for TDLS from scratch using the building blocks that Scapy provides. This includes the Setup Request, Setup Response, Setup Confirm and Teardown messages that we previously discussed in section \ref{sec:establishing-tdls}.
 
 \subsection{Cryptographic utilities}

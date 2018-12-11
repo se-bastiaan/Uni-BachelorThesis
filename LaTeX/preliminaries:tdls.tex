@@ -29,9 +29,9 @@ To establish a direct-link we need two stations. One of the stations is called t
 
 A direct link connection can be secured via the TDLS PeerKey (TPK). This key is is used to provide a Robust Secure Network Associaton (RSNA) for the direct link. This provides data origin authenticity of the setup messages and the confidentiality for data that will be send over the direct link.
 
-The TPK is computed using fields from the messages in the TDLS establishment. Next, thsis TPK can be used to calculate the Message Integrity Code (MIC) of the messages sent in the establishment.
+The TPK is computed using fields from the messages in the TDLS establishment. Next, theses TPK can be used to calculate the Message Integrity Code (MIC) of the messages sent in the establishment.
 
-The fields used in the calculation of the TPK are two nonces (SNonce and ANonce) and the MAC addresses of the initiator, responder and access point. The handshake (figure \ref{fig:tpk-mcs}) is started by the initiator who sends a chosen ciphersuite (RSNE) and the SNonce to the responder station. The responder will use its own nonce to generate the TPK. This TPK is then used to calculate the MIC with the whole message as input. The initiator, who is now receiving both the nonces and a calculated MIC will derive the TPK as well and confirm that the MIC is valid. The responder will then send the 3rd message containing a new MIC to validate the direct link.
+The fields used in the calculation of the TPK are two nonces (SNonce and ANonce) and the MAC addresses of the initiator, responder and access point. The handshake (figure \ref{fig:tpk-mcs}) is started by the initiator who sends a chosen cipher suite (RSNE) and the SNonce to the responder station. The responder will use its own nonce to generate the TPK. This TPK is then used to calculate the MIC with the whole message as input. The initiator, who is now receiving both the nonces and a calculated MIC will derive the TPK as well and confirm that the MIC is valid. The responder will then send the 3rd message containing a new MIC to validate the direct link.
 
 \begin{figure}[!h]
 	\centering
