@@ -1,0 +1,8 @@
+\chapter{Future work}
+\label{futurework}
+
+Our research can be used a basis for future investigation into this topic. We will point out several possiblities.
+
+In our research we have not taken error messages or timeouts into account. This was to simplify our research. Better results may be found when these factors are introduced. One of the ways to do this would be to use an improved version of the StateLearner\footnote{https://github.com/ChrisMcMStone/statelearner} software that we used. 
+Related to this improved would be changing the values of the messages that are send using the mapper, more commonly known as fuzzing. Using this method we might be able to find states that we currently did not find. This should be considered since fuzzing would introduce error responses to the mapper. The learner will thus learn about the different variations of responses.
+Lastly we could execute this research on real hardware instead of using a simulated environment. This would introduce more new factors: packet loss and interference. It might however be able to use the TDLS channel switch to confirm a successful connection. This would greatly improve the resulting model.

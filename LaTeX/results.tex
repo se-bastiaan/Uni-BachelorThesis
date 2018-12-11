@@ -13,22 +13,37 @@ We expect that the TDLS state machine has three states:
 
 If we follow the 802.11 specification we should have at least the following edges:
 \begin{itemize}
-	\item State 0 to 1: TDLS Setup Request resulting in a TDLS Setup Response with status code SUCCESS (\cite[11.23.4]{80211})
-	\item State 1 to 2: TDLS Setup Confirm without response
-	\item State 2 to 0: TDLS Teardown without response
-	\item State 2 to 1: TDLS Setup Request resulting in a TDLS Setup Response (11.23.4 sub e \cite{80211})
+	\item State 0 to 1: SETUP\_REQUEST / SETUP\_RESPONSE - TDLS Setup Request resulting in a TDLS Setup Response (\cite[11.23.4]{80211})
+	\item State 1 to 1: SETUP\_REQUEST / SETUP\_RESPONSE - TDLS Setup Request resulting in a TDLS Setup Response (\cite[11.23.4]{80211})
+	\item State 1 to 2: SETUP\_CONFIRM / NO\_RESPONSE - TDLS Setup Confirm without response
+	\item State 1 to 0: TEARDOWN / NO\_RESPONSE: TDLS Teardown without response
+	\item State 2 to 0: TEARDOWN / NO\_RESPONSE: TDLS Teardown without response
+	\item State 2 to 1: SETUP\_REQUEST / SETUP\_RESPONSE - TDLS Setup Request resulting in a TDLS Setup Response (\cite[11.23.4 sub e]{80211})
 \end{itemize}
 
-Since we do not get a response from all requesting messages the mapper will, as previously mentioned, make assumptions on the status of the connection. This means that every state will also have an edge indicating the status.
+For any situation where the input symbol should not result in a state change we should see a self loop. These situations are not described in the specification and should thus do nothing.
+
+Since the mapper holds an internal state to monitor the connection (\ref{research:mapper:implementation}) we also expect the following state changes:
+\begin{itemize}
+	\item State 0 to 0: CONNECTED / NOT\_CONNECTED - Indicates that no successful setup was made
+	\item State 1 to 1: CONNECTED / NOT\_CONNECTED - Indicates that no successful setup was made
+	\item State 2 to 2: CONNECTED / CONNECTED - Indicates that a successful setup was made
+\end{itemize}
+
+Figure \ref{fig:tdls-sm-expected} gives a visual representation of our expectations.
 
 \section{Analysis}
 
-The state machine learned by the L* algorithm does not deviate from the previously mentioned requirements of the implementation. It has more edges than mentioned. These edges would not cause any differences, since the state stays the same. This is a reflection from the specification, without the current message order no action should be taken. However, that the state machine is not different may be influenced by the assumption made by the mapper. Since we could not find a working procedure to check if a TDLS connection was setup successfully this was to only way to obtain a seemingly valid model.
+The state machine learned by the L* algorithm (\ref{fig:tdls-sm-full}) does not deviate from the previously mentioned requirements of the implementation. There are no state changes that we did not expect. However, this behaviour may be caused by the internal state that the mapper holds to determine if a successful connection was made.
+
+Our research method does not take timeouts or errors into account and always assumes a successful connection will be made if the happy flow is executed. This means that we're unable to detect if the connection really works as it should. It might thus be possible that the TDLS implementation in wpa\_supplicant does not work as it's supposed to.
 
 \section{Interesting findings}
 
-\begin{enumerate}
-	\item WPA supplicant tests do not really rely on communication to check a tdls connection
-	\item No support for channel switch in hwsim
-	\item No response from interface at all, may be driver is the issue?
-\end{enumerate}
+Since our model exactly matched our expectations we investigated the tests that come bundled with wpa\_supplicant.
+
+First we found that the tests that are executed to validate the implementation of TDLS do not actually check the connection that is established. The principle used in this research is the same as the principle used in the tests: a happy flow is a successful connection. The tests will detect if errors are encountered and fail, however the connection itself is no more than checking if a setup confirm message is sent.
+
+Our second finding is interesting related to the entire TDLS implementation. There are tests written to verify the workings of the TDLS channel switch, however the drivers used to execute these tests do no support this functionality. This means the test is useless. After further inspection it seems the test isn't run to prevent it from failing.
+
+This is no major problem but is interesting nonetheless. This is a widely used piece of software that had no official release between 2016 and 2018 and is still used without many questions being asked. We do understand however that the software is meant for hardware interfaces and the tests only used a simulated environment.

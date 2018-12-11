@@ -21,6 +21,7 @@ Our goal is to learn a state machine of a TDLS implementation. We're approaching
 The L* algorithm is run by the learner, who tries to communicate with the teacher to infer the state machine of that teacher. In our learning process this teacher will be an implementation of TDLS.
 
 \subsubsection{Learning process}
+\label{preliminaries:learning:process}
 
 The first step in the learning process is sending arbitrary messages to the teacher. The teacher will answer based on the message sent by the learner. These answers can differ for each type of message sent by the learner. This allows the learner to build a hypothetical state machine based on those messages, both the input and output.
 Since the state machine of the learner is only hypothetical it needs needs to check with the teacher if it matches the actual state machine.
