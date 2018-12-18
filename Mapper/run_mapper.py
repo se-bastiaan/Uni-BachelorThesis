@@ -51,22 +51,29 @@ def main():
             else:
                 pkt = None
             sendp(create_tdls_setup_confirm(gdcs=4, responsePacket=pkt), iface='wlan1', verbose=verbose)
+            setup_response_packet = None
         elif cmd == "SETUP_REQUEST_OPEN_CORRECT":
+            setup_response_packet = None
             connected = False
             sendp(create_tdls_setup_request(gdcs=None), iface='wlan1', verbose=verbose)
         elif cmd == "SETUP_REQUEST_AES_CORRECT":
+            setup_response_packet = None
             connected = False
             sendp(create_tdls_setup_request(gdcs=4), iface='wlan1', verbose=verbose)
         elif cmd == "SETUP_REQUEST_OPEN_MALFORMED":
+            setup_response_packet = None
             connected = False
             sendp(create_tdls_setup_request(gdcs=None, malformed=True), iface='wlan1', verbose=verbose)
         elif cmd == "SETUP_REQUEST_AES_MALFORMED":
+            setup_response_packet = None
             connected = False
             sendp(create_tdls_setup_request(gdcs=4, malformed=True), iface='wlan1', verbose=verbose)
         elif cmd == "TEARDOWN":
+            setup_response_packet = None
             connected = False
             sendp(create_tdls_teardown(), iface='wlan1', verbose=verbose)
         elif cmd == "RESET":
+            setup_response_packet = None
             connected = False
             tpk = None
             client.sendall("{}\n".format("NO_RESPONSE"))
@@ -79,6 +86,7 @@ def main():
             packets = sniff(iface='wlan1', timeout=1, lfilter = lambda x: Dot11TDLSAction in x)
 
             if len(packets) > 0:
+                print('packet length longer 0')
                 if packets[0].action == 2:
                     response_msg = "SETUP_CONFIRM"
                 elif packets[0].action == 1:
