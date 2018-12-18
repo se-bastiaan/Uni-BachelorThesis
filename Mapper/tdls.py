@@ -52,14 +52,18 @@ def create_tdls_discovery(bssid="02:00:00:00:03:00",
         
 def create_tdls_setup_request(bssid="02:00:00:00:03:00",
     initSta="02:00:00:00:01:00", respSta="02:00:00:00:00:00",
-    gdcs=None):
+    gdcs=None, malformed=False):
+
+    raw = Raw(load='\x7f\x08\x00\x00\x00\x00\x20\x00\x00\x00')
+    if malformed:
+        raw = Raw(load='\x7f\x02\x10\x00\x00\x70\x20\x01\x01\x00')
 
     packet = (Ether(src=initSta, dst=respSta, type=0x890d) / 
     		Dot11TDLSAction(action=0) /
             Dot11Cap() / 
             Dot11EltRates() / 
             Dot11EltExtRates() / 
-            Raw(load='\x7f\x08\x00\x00\x00\x00\x20\x00\x00\x00') /
+            raw /
             Dot11EltChannels(channel=2, range=12) /
             Dot11EltLinkIdentifier(bssid=bssid, initSta=initSta, respSta=respSta))
   

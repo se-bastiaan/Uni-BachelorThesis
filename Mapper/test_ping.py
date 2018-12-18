@@ -28,6 +28,17 @@ from packets import *
 from tdls import *
 
 def main():
-    sendp(create_ping_message(response=False), iface='wlan1', verbose=True)
+    s = socket.socket()
+    s.connect(("0.0.0.0", 8888))
+
+    while(True):
+    	print("Giveth input: ")
+        cmd = input()
+
+        s.sendall(cmd)
+
+        resp = s.recv(1024).strip()
+        print(resp)
+
 
 if  __name__ =='__main__':main()
