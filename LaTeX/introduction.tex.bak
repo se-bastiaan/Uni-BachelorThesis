@@ -1,0 +1,22 @@
+\chapter{Introduction}\label{introduction}
+
+\iffalse
+The introduction of your bachelor thesis introduces the research area, the
+research hypothesis, and the scientific contributions of your work.
+A good narrative structure is the one suggested by Simon Peyton Jones
+\cite{80211}:
+%
+\begin{itemize}
+\item describe the problem / research question
+\item motivate why this problem must be solved
+\item demonstrate that a (new) solution is needed
+\item explain the intuition behind your solution
+\item motivate why / how your solution solves the problem (this is technical)
+\item explain how it compares with related work
+\end{itemize}
+\fi
+
+
+A lot has changed since the introduction of personal computers. Networks have been set-up everywhere and smartphones have been invented. The past decades most internet networks have become wireless. The most used wireless internet protocols are defined in the IEEE 802.11 specification \cite{80211} and are more commonly known under the brand name ‘Wi-Fi’. Part of this specification is a way to let clients (stations, STAs) communicate directly without severing the connection to the shared access point (AP), this is called a Tunneled Direct Link Set-up (TDLS). A TDLS connection reduces the load on the access point improving the reliability of the connections made by individual clients. This specific part of the specification introduces a handshake protocol which is used to secure the link. We want to look into this part of the specification, analyse the implementation to find out if this handshake is properly executed. Since the protocol is intended for public use, people should be able to rely on the handshake to be completely secure. Analysing the implementation will make sure the public can use the TDLS functionality without worrying about wether their connection is secure. For the analysis we automatically infer the state machine of the implementation of the TDLS handshake comparing the output to the official specification.
+
+This thesis is structured as follows: firstly we will discuss the 802.11 specification (\ref{preliminaries:wifi}) and the TDLS protocol (\ref{preliminaries:tdls}). Next we will take a look at Mealy machines and how to infer that kind of state machines (\ref{preliminaries:learning}, \ref{preliminaries:tooling}). Consequently we will explain how we implemented our mapper (\ref{research:mapper}) and how it works in our setup (\ref{research:setup}). Lastly we will compare our expectations (\ref{results:expectations}) based on the specification to the inferred state machine (\ref{results:analysis}) and draw our conclusions (\ref{conclusions}).

@@ -1,0 +1,11 @@
+digraph g {
+__start0 [label="" shape="none"];
+
+	s0 [shape="circle" label="0"];
+	s0 -> s0 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s0 -> s0 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s0 -> s0 [label="TEARDOWN / NO_RESPONSE"];
+	s0 -> s0 [label="CONNECTED / NOT_CONNECTED"];
+
+__start0 -> s0;
+}

@@ -1,8 +1,8 @@
 \chapter{Related Work}\label{relatedwork}
 
-In this chapter we give an overview of all previous work related to the security of Wi-Fi and/or the use of models to test or infer state machines.
+In this chapter we give an overview of previous work related to the security of Wi-Fi and/or the use of models to test or infer state machines.
 
-\subsection{Wi-Fi}
+\section{Wi-Fi}
 
 The authentication of clients with access points within the 802.11 specification, Wi-Fi, is facilitated by the so-called 4-way handshake. Closely related to this thesis is the research into both the manual \cite{Vanhoef:2017} and automated \cite{Stone:2018} state learning of that handshake.
 
@@ -10,10 +10,10 @@ The 4-Way Handshake has also been subject of numerous formal analyses \cite{He:2
 
 More in-depth research into the handshake discovered a vulnerability in the transmission of the group-key \cite{Vanhoef:2016}. This research by Vanhoef et al. forced RC4 encryption of the group key, which is insecure \cite{Fluhrer:2001}. Following this discovery Vanhoef et al. introduced an attack that re-installs the key used by the 4-way handshake making replaying, decryption and forging of packets possible \cite{Vanhoef:2017-2}.
 
-We are not aware of any previous work on the Tunneled Direct-Link Setup functionality of the 802.11 specification.
+In October 2018 Vanhoef et al. presented a new paper \cite{Vanhoef:2018} based on their previous work on the 4-way handshake including an attack on the TPK with a possibility of re-installation of the key as well. 
 
-\subsection{Learning state machines}
+\section{Learning state machines}
 
-Past work relying on state machine learning has already been mentioned in the previous section. Both the manual and automated modeling of the 4-way handshake \cite{Vanhoef:2017,Stone:2018}. However, there is other research that analyses protocols by inferring the state machines. Aarts et al. \cite{Aarts:2013} used model-based learning to infer to state machines of EMV cards. Additionally, hand-held readers use for internet banking were subject of research \cite{Chalupar:2014} along with the TLS protocol \cite{Ruiter:2015,Thoor:2018}. These analyses discovered several security flaws in different implementations of TLS. Other implementations of protocols analysed via this technique are SSH \cite{Brostean:2017,Tijssen:2015} and IPSec \cite{Veldhuizen:2017}.
+Past work relying on state machine learning has already been mentioned in the previous section. We have seen examples of both manual and automated modeling of the 4-way handshake \cite{Vanhoef:2017,Stone:2018}. However, there is other research that analyses protocols by inferring the state machines. Aarts et al. \cite{Aarts:2013} used model-based learning to infer to state machines of EMV cards. Additionally, hand-held readers use for internet banking were subject of research \cite{Chalupar:2014} along with the TLS protocol \cite{Ruiter:2015,Thoor:2018}. These analyses discovered several security flaws in different implementations of TLS. Other implementations of protocols analysed via this technique are SSH \cite{Brostean:2017,Tijssen:2015} and IPSec \cite{Veldhuizen:2017}.
 
 Furthermore, the technique was also used for a non-security related subject by learning the TCP network protocol \cite{Brostean:2014}. This revealed ways to fingerprint remote operating systems.

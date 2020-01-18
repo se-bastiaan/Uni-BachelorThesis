@@ -13,6 +13,7 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{graphicx}  
+\usepackage{listings}  
 \usepackage[toc,page]{appendix}
 \usepackage[a4paper]{geometry}
 
@@ -35,7 +36,7 @@
 \begin{document}
 \begin{titlepage}
 \begin{center}
-\textsc{\LARGE Bachelor thesis\\Computer Science}\\[1.5cm]
+\textsc{\LARGE Bachelor thesis\\Computing Science}\\[1.5cm]
 \includegraphics[height=100pt]{logo}
 
 \vspace{0.4cm}
@@ -58,12 +59,9 @@ s4459636\\
 \textit{First supervisor/assessor:}\\
 dr. ir. Joeri de Ruiter\\
 \texttt{joeri@cs.ru.nl}\\[1.3cm]
-\textit{[Second supervisor:]}\\
-title, name\\
-\texttt{e-mail address}\\[1.3cm]
 \textit{Second assessor:}\\
-title, name\\
-\texttt{e-mail address}
+dr. ir. Erik Poll\\
+\texttt{e.poll@cs.ru.nl}
 \end{flushright}
 \end{minipage}
 \vfill
@@ -79,14 +77,14 @@ title, name\\
 \input{research}
 \input{results}
 \input{relatedwork}
-\input{futurework}
 \input{conclusions}
+\input{futurework}
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
 \begin{appendices}
-\input{appendix:a}
+\input{appendix}
 \end{appendices}
 
 \end{document}

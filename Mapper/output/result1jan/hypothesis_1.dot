@@ -1,0 +1,48 @@
+digraph g {
+__start0 [label="" shape="none"];
+
+	s0 [shape="circle" label="0"];
+	s1 [shape="circle" label="1"];
+	s2 [shape="circle" label="2"];
+	s3 [shape="circle" label="3"];
+	s4 [shape="circle" label="4"];
+	s5 [shape="circle" label="5"];
+	s6 [shape="circle" label="6"];
+	s0 -> s1 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s0 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / NO_RESPONSE"];
+	s0 -> s1 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s0 -> s0 [label="TEARDOWN / NO_RESPONSE"];
+	s0 -> s0 [label="CONNECTED / NOT_CONNECTED"];
+	s1 -> s1 [label="SETUP_REQUEST_AES_CORRECT / NO_RESPONSE"];
+	s1 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / SETUP_RESPONSE_FAIL_256"];
+	s1 -> s2 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s1 -> s1 [label="TEARDOWN / NO_RESPONSE"];
+	s1 -> s0 [label="CONNECTED / NOT_CONNECTED"];
+	s2 -> s1 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s2 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / SETUP_RESPONSE_FAIL_256"];
+	s2 -> s3 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s2 -> s1 [label="TEARDOWN / NO_RESPONSE"];
+	s2 -> s4 [label="CONNECTED / CONNECTED"];
+	s3 -> s1 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s3 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / NO_RESPONSE"];
+	s3 -> s3 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s3 -> s5 [label="TEARDOWN / NO_RESPONSE"];
+	s3 -> s2 [label="CONNECTED / NOT_CONNECTED"];
+	s4 -> s5 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s4 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / NO_RESPONSE"];
+	s4 -> s0 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s4 -> s1 [label="TEARDOWN / NO_RESPONSE"];
+	s4 -> s2 [label="CONNECTED / CONNECTED"];
+	s5 -> s6 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s5 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / SETUP_RESPONSE_FAIL_256"];
+	s5 -> s1 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s5 -> s1 [label="TEARDOWN / NO_RESPONSE"];
+	s5 -> s0 [label="CONNECTED / NOT_CONNECTED"];
+	s6 -> s0 [label="SETUP_REQUEST_AES_CORRECT / SETUP_REPONSE_SUCCESS"];
+	s6 -> s1 [label="SETUP_REQUEST_AES_MALFORMED / SETUP_RESPONSE_FAIL_256"];
+	s6 -> s3 [label="SETUP_CONFIRM / NO_RESPONSE"];
+	s6 -> s1 [label="TEARDOWN / NO_RESPONSE"];
+	s6 -> s0 [label="CONNECTED / NOT_CONNECTED"];
+
+__start0 -> s0;
+}

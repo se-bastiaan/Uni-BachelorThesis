@@ -7,5 +7,8 @@ these should have been written down earlier in the thesis.
 Therefore, conclusions can be brief and to the point.
 \fi
 
-In this research we've shown that this method of inferring the TDLS state machine is not ideal. This does not mean that this method is not useful for researching protocols.
-Future work is required to come to a better understanding of the TDLS state machine implementations.
+In this research we have shown that this method of inferring the TDLS state machine works to a certain point. Our approach has shown that the basic TDLS handshake protocol can be inferred as long as assumptions are introduced. We have shown that by sending correct TDLS messages no error responses will be triggered by wpa\_supplicant. This could mean that the implementation is working as expected.
+
+Our work can be used as a basis for future investigation. We have successfully implemented the messages used by TDLS to communicate by only using Scapy and cryptographic tools. This means that using a learner and Python tools is a suitable approach to this kind of research for other protocols in the 802.11 specification.
+
+Lastly, this research has shown that automatically inferring state machines can improve our knowledge about the inner workings of protocols, in our case TDLS.

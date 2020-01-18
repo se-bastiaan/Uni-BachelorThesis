@@ -1,8 +1,15 @@
 \chapter{Future work}
 \label{futurework}
 
-Our research can be used a basis for future investigation into this topic. We will point out several possiblities.
+Our research can be used a basis for future investigation into this topic. We will point out several possibilities.
 
 In our research we have not taken error messages or timeouts into account. This was to simplify our research. Better results may be found when these factors are introduced. One of the ways to do this would be to use an improved version of the StateLearner\footnote{https://github.com/ChrisMcMStone/statelearner} software that we used. 
-Related to this improved would be changing the values of the messages that are send using the mapper, more commonly known as fuzzing. Using this method we might be able to find states that we currently did not find. This should be considered since fuzzing would introduce error responses to the mapper. The learner will thus learn about the different variations of responses.
-Lastly we could execute this research on real hardware instead of using a simulated environment. This would introduce more new factors: packet loss and interference. It might however be able to use the TDLS channel switch to confirm a successful connection. This would greatly improve the resulting model.
+
+Another improvement would be adding a malformed message to the input symbols. We believe that adding this type of message would improve the resulting state machine. Error messages can reveal useful information about the implementation and the way it is implemented. During our testing of the setup request message we noticed that the time to respond from the wpa\_supplicant TDLS handshake implementation took significant less time in the case of a malformed message. Thus it is possible that our research missed mistakes in the implementation, even though we always sent correctly formatted messages.
+
+Using fuzzing the messages could also be modified to find states that we did not find in our research. Fuzzing could introduce more kinds of error messages. The learner will thus learn about the different variations of responses.
+
+One more enhancement would be to execute this research on real hardware instead of using a simulated environment. This would introduce more new factors: packet loss and interference. It might however enable us to use the TDLS channel switch to confirm a successful connection. We think this would greatly improve the resulting model.
+
+Lastly we think that adding a ping to confirm a successful connection would improve the results by removing the assumptions we had to make.
+
